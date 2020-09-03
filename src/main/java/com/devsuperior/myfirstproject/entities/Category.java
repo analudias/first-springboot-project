@@ -4,16 +4,26 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+@Entity
 public class Category implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String name;
 	
-	@JsonIgnore /*é um anotation que vai fazer um pré processamento para dizer
-			    que não é para serlizar a lista de produtos de uma categoria*/
+	
+	@JsonIgnore /*é um anotation que vai fazer um pré processamento para dizer que não é para serializar a lista de produtos de uma categoria*/
+	@OneToMany(mappedBy = "category")
 	private List<Product> products = new ArrayList<>();
 	
 	public Category() {
